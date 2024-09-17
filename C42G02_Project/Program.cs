@@ -17,7 +17,7 @@ namespace C42G02_Project
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
-            builder.Services.AddScoped<DepartmentRepository>();
+            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 
             var app = builder.Build();
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace C42G02_project.BLL.Repositories
 {
-    public class DepartmentRepository
+    public class DepartmentRepository : IDepartmentRepository
     {
 
         /*
