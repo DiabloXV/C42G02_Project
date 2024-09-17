@@ -1,6 +1,7 @@
 ﻿using C42G02_project.BLL.Repositories;
 using C42G02_project.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.CodeDom;
 
 namespace C42G02_Project.Controllers
 {
@@ -50,5 +51,69 @@ namespace C42G02_Project.Controllers
             return View(departmet);
         }
 
+        public IActionResult Edit(int? id)
+        {
+            /*Retrieve Department and send it to the view*/
+            if (!id.HasValue)
+                return BadRequest();
+            var departmet = _repository.Get(id.Value);
+            if (departmet is null)
+                return NotFound();
+            return View(departmet);
+        }
+
+        [HttpPost]
+        public IActionResult Edit([FromRoute] int id,Department department) //This action is real deal that implements the inner workings of Creating a department
+        {
+            //Server side validation
+            if (id != department.Id) return BadRequest();
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _repository.Update(department);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch(Exception ex) 
+                {
+                    //Log Exception
+                    ModelState.AddModelError("", ex.Message);
+                }
+            }
+            return View(department);
+        }
+
+        public IActionResult Delete(int? id)
+        {
+            /*Retrieve Department and send it to the view*/
+            if (!id.HasValue)
+                return BadRequest();
+            var departmet = _repository.Get(id.Value);
+            if (departmet is null)
+                return NotFound();
+            return View(departmet);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult ConfirmDelete(int? id)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+
+            var departmet = _repository.Get(id.Value);
+            if (departmet is null)
+                return NotFound();
+
+            try
+            {
+                _repository.Delete(departmet);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex) 
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+            }
+
+            return View(departmet);
+        }
     }
 }
