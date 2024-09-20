@@ -1,0 +1,27 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create New Employee</h1>
+<form method="post" asp-action="Create">
+    <partial name="PartialViews/CreateEditPartial"></partial>
+    <div class="mt-3">
+        <button class=" btn btn-success" type="submit">Create</button>
+        <a class="btn btn-danger" asp-action="Index">Cancel</a>
+
+    </div>
+</form>
+
+                                                        @*CLIENT SIDE VALIDATION*@
+@*We created a Validation section for:
+    1- We want this part to be rendered (separatley) from the RenderyBody() in the _Layout file
+    1- We dont want a request to be sent if the validation does not pass all the required inputs
+    2- We dont want the app send a request for downloading the Jquery Validation packages unless its within the Create View since other 
+       views may not require validations
+*@
+@section Validation
+{
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

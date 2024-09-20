@@ -1,18 +1,16 @@
-﻿using C42G02_project.BLL.Repositories;
-using C42G02_project.DAL.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.CodeDom;
+﻿using System.CodeDom;
 
 namespace C42G02_Project.Controllers
 {
-    
+
     public class DepartmentsController : Controller
     {
-        private readonly IDepartmentRepository _repository;
+        //private  IGenericRepository <Department> _repository;'
+        private IDepartmentRepository _repository;
 
-        public DepartmentsController(IDepartmentRepository departmnetRepository)
+        public DepartmentsController(IDepartmentRepository repository)
         {
-            _repository = departmnetRepository;
+            _repository = repository;
         }
 
         [HttpGet]
@@ -40,29 +38,14 @@ namespace C42G02_Project.Controllers
             return RedirectToAction(nameof(Index));                                 
         }
 
-        public IActionResult Details(int? id) 
-        {
-            /*Retrieve Department and send it to the view*/
-            if (!id.HasValue)
-                return BadRequest();
-            var departmet = _repository.Get(id.Value);
-            if (departmet is null)
-                return NotFound();
-            return View(departmet);
-        }
+        public IActionResult Details(int? id) => DepartmentControllerHandler(id, nameof(Details));
 
-        public IActionResult Edit(int? id)
-        {
-            /*Retrieve Department and send it to the view*/
-            if (!id.HasValue)
-                return BadRequest();
-            var departmet = _repository.Get(id.Value);
-            if (departmet is null)
-                return NotFound();
-            return View(departmet);
-        }
+
+        public IActionResult Edit(int? id) => DepartmentControllerHandler(id, nameof(Edit));
+
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit([FromRoute] int id,Department department) //This action is real deal that implements the inner workings of Creating a department
         {
             //Server side validation
@@ -83,16 +66,9 @@ namespace C42G02_Project.Controllers
             return View(department);
         }
 
-        public IActionResult Delete(int? id)
-        {
-            /*Retrieve Department and send it to the view*/
-            if (!id.HasValue)
-                return BadRequest();
-            var departmet = _repository.Get(id.Value);
-            if (departmet is null)
-                return NotFound();
-            return View(departmet);
-        }
+        public IActionResult Delete(int? id) => DepartmentControllerHandler(id, nameof(Delete));
+
+
         [HttpPost, ActionName("Delete")]
         public IActionResult ConfirmDelete(int? id)
         {
@@ -114,6 +90,16 @@ namespace C42G02_Project.Controllers
             }
 
             return View(departmet);
+        }
+        
+        private IActionResult DepartmentControllerHandler(int? id, string ViewName)
+        {
+            if (!id.HasValue)
+                return BadRequest();
+            var departmet = _repository.Get(id.Value);
+            if (departmet is null)
+                return NotFound();
+            return View(ViewName, departmet);
         }
     }
 }

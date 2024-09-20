@@ -1,0 +1,69 @@
+﻿@model IEnumerable<Employee>
+@{
+    ViewData["Title"] = "Index";
+    //var employee2  = @ViewData["Message"] as Employee;
+}
+
+<a class="btn btn-primary mt-3 mb-5" asp-action="Create">Create New Employee</a>
+
+@if(Model.Any())
+{
+    @*<h1>@employee2.Name</h1>*@
+    @*<h1>@ViewBag.Message</h1>*@
+    <h1>All Employees</h1>
+    <h2 class="alert-success">@TempData["Message"]</h2>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+
+                <td class="text-center">@Html.DisplayNameFor(e => e.Name)</td>
+                <td class="text-center">@Html.DisplayNameFor(e => e.Age)</td>
+                <td class="text-center">@Html.DisplayNameFor(e => e.Salary)</td>
+                <td class="text-center">@Html.DisplayNameFor(e => e.Address)</td>
+                <td class="text-center">@Html.DisplayNameFor(e => e.Email)</td>
+                <td class="text-center">@Html.DisplayNameFor(e => e.Phone)</td>
+                <td class="text-center">@Html.DisplayNameFor(e => e.IsActive)</td>
+
+
+                <td class="text-center">Details</td>
+                <td class="text-center">Edit</td>
+                <td class="text-center">Delete</td>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var employee in Model)
+            {
+                <tr>
+                    <td class="text-center">@employee.Name</td>
+                    <td class="text-center">@employee.Age</td>
+                    <td class="text-center">@Html.DisplayFor(e => employee.Salary)</td>
+                    <td class="text-center">@employee.Address</td>
+                    <td class="text-center">@Html.DisplayFor(e => employee.Email)</td>
+                    <td class="text-center">@employee.Phone</td>
+                    <td>
+                        @if(employee.IsActive)
+                        {
+                            <i class="fa-solid fa-circle d-flex justify-content-center mt-2" style="color:limegreen"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-circle d-flex justify-content-center mt-2" style="color:red"></i>
+                        }
+                    </td>
+
+                    <partial name="_ButtonPartial" Model="@employee.Id"></partial>
+                </tr>
+ 
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="mt-3 alert-warning">
+        <h2>No Employees</h2>
+    </div>
+}
+
+
