@@ -1,7 +1,3 @@
-using C42G02_project.BLL.Repositories;
-using C42G02_project.DAL.Data;
-using Microsoft.EntityFrameworkCore;
-
 namespace C42G02_Project
 {
     public class Program
@@ -18,6 +14,8 @@ namespace C42G02_Project
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            //builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
 
             var app = builder.Build();
 

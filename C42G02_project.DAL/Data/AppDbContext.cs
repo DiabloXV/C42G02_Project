@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using C42G02_project.DAL.Data.Configurations;
 using C42G02_project.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,11 +22,13 @@ namespace C42G02_project.DAL.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration (new DepartmentConfigurations ());
-            modelBuilder.ApplyConfigurationsFromAssembly(System.Reflection.Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new EmployeeConfigs());
         }
 
         public DbSet<Department> Departments { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
     }
 }
