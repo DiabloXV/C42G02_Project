@@ -7,9 +7,12 @@ namespace C42G02_project.BLL.Repositories
         {
             
         }
-        public IEnumerable<Employee> GetAll(string Address)
-        {
-            return _DbSet.Where(e => e.Address.ToLower() == Address.ToLower()).ToList();
-        }
+        public IEnumerable<Employee> GetAll(string Address) => _DbSet.Where(e => e.Address.ToLower() == Address.ToLower()).ToList();
+
+
+
+        public IEnumerable<Employee> GetAllWithDepartment() => _DbSet.Include(e => e.Department).ToList();
+         
+        
     }
 }
