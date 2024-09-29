@@ -1,4 +1,10 @@
-﻿
+﻿//ViewData => Dictionary <String, Object>
+//Both ViewBag and ViewData has the type of dictionary if key is repeated in Name it will be overriden
+//ViewBag.Message = "Hello2";
+//ViewData["Message"] = "Hello1";
+
+//C# 4 Featuring ViewBag
+
 namespace C42G02_Project.Controllers
 {
     public class EmployeesController : Controller
@@ -15,19 +21,15 @@ namespace C42G02_Project.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string? searchValue)
         {
-            //ViewData => Dictionary <String, Object>
-            //Both ViewBag and ViewData has the type of dictionary if key is repeated in Name it will be overriden
-            //ViewBag.Message = "Hello2";
-            //ViewData["Message"] = "Hello1";
+            var employees = Enumerable.Empty<Employee>();
 
-            //C# 4 Featuring ViewBag
+            if (string.IsNullOrWhiteSpace(searchValue))
+                employees = _employeeRepository.GetAllWithDepartment();
+            else employees = _employeeRepository.GetAll(searchValue);
 
-
-            var employees = _employeeRepository.GetAllWithDepartment(); //Retrieve All employees along with their departments
-
-            var employeesViewModel = _mapper.Map<IEnumerable <Employee>, IEnumerable <EmployeeViewModel>>(employees);
+            var employeesViewModel = _mapper.Map<IEnumerable<Employee>, IEnumerable<EmployeeViewModel>>(employees);
 
             return View(employeesViewModel);
         }
