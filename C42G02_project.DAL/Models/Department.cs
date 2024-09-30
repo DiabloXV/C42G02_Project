@@ -18,5 +18,7 @@ namespace C42G02_project.DAL.Models
 
         [DisplayName("Created At")]
         public DateTime DateOfCreation { get; set; }
+
+        public ICollection<Employee>? Employees { get; set; } = new List<Employee>();
     }
 }

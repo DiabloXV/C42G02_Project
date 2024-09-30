@@ -26,10 +26,13 @@
         <tbody>
             @foreach (var department in Model)
             {
-            <td class="text-center">@department.Code</td>
-            <td class="text-center">@department.Name</td>
-            <td class="text-center">@department.DateOfCreation</td>
-            <partial name="_ButtonPartial" Model="@department.Id"></partial>
+                <tr>
+                    <td class="text-center">@department.Code</td>
+                    <td class="text-center">@department.Name</td>
+                    <td class="text-center">@department.DateOfCreation</td>
+
+                    <partial name="_ButtonPartial" Model="@department.Id"></partial>
+                </tr>
             }
         </tbody>
     </table>

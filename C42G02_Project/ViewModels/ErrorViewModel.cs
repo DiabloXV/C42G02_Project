@@ -1,4 +1,4 @@
-namespace C42G02_Project.Models
+namespace C42G02_Project.ViewModels
 {
     public class ErrorViewModel
     {

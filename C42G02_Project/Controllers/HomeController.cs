@@ -1,7 +1,3 @@
-using C42G02_Project.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-
 namespace C42G02_Project.Controllers
 {
     public class HomeController : Controller

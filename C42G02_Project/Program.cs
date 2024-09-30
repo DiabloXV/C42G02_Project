@@ -1,3 +1,5 @@
+
+
 namespace C42G02_Project
 {
     public class Program
@@ -13,6 +15,7 @@ namespace C42G02_Project
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
             });
+            builder.Services.AddAutoMapper(typeof(Program).Assembly);
             builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             //builder.Services.AddScoped<IGenericRepository<Department>, GenericRepository<Department>>();
